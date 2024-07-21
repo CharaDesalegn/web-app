@@ -1,0 +1,46 @@
+h1{
+    text-align: center;
+}
+body{
+    background-color: aquamarine;
+}
+.input{
+    display: flex;
+
+}
+input{
+    width: 80%;
+    margin-left: 30px;
+    height: 20px;
+    border: none;
+    border-bottom: solid black;
+    box-shadow: 0px 4px 20px black;
+    border-radius: 10px 0px 0px 10px ;
+}
+button{
+    width: 100px;
+    margin-right: 30px;
+    border: none;
+    border-radius: 0px 10px 10px 0px;
+    background-color: rgb(101, 101, 255);
+}
+li{
+    font-size: larger;
+    color: rgb(201, 75, 75);
+}
+ul{
+    font-size: medium;
+    color: black;
+    margin: 10px;
+}
+#audiob{
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 10px;
+    background-color: wheat;
+    margin: 20px;
+}
+.heading{
+    display: flex;
+}

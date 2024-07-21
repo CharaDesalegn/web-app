@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+<body>
+    <style>
+        h1{
+    text-align: center;
+}
+body{
+    background-color: aquamarine;
+}
+.input{
+    display: flex;
+
+}
+input{
+    width: 80%;
+    margin-left: 30px;
+    height: 20px;
+    border: none;
+    border-bottom: solid black;
+    box-shadow: 0px 4px 20px black;
+    border-radius: 10px 0px 0px 10px ;
+}
+button{
+    width: 100px;
+    margin-right: 30px;
+    border: none;
+    border-radius: 0px 10px 10px 0px;
+    background-color: rgb(101, 101, 255);
+}
+li{
+    font-size: larger;
+    color: rgb(201, 75, 75);
+}
+ul{
+    font-size: medium;
+    color: black;
+    margin: 10px;
+}
+#audiob{
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 10px;
+    background-color: wheat;
+    margin: 20px;
+}
+.heading{
+    display: flex;
+}
+    </style>
+    <h1>Dictionary</h1>
+    <div>
+        <div class="input">
+            <input id="input" type="text" ke="search()" autocomplete="off">
+            <button onclick="search()" id="b">search</button>
+        </div>
+        <div id="search_results">
+            <div class="search_results">
+                <div class="heading">
+                    <h2 id="name"></h3>
+                    <audio id="audio"></audio>
+                    <button onclick = "p()" id="audiob"></button>
+                </div>
+                <div id="search_results">
+                    
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const input = document.getElementById("input")
+        const button = document.getElementById("b")
+        const h3 = document.getElementById("name")
+        const lists = document.getElementById("search_results")
+        const audio = document.getElementById("audio")
+        const audiob = document.getElementById("audiob")
+        
+        
+        
+        async function search(){
+            clean_up()
+            try{
+            console.log("searching.....")
+            const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${input.value}`)
+            const data = await res.json()
+            console.log(data[0].phonetics[0].audio)
+            for (meaning of data[0].meanings){
+                create_list(meaning.definitions,meaning.partOfSpeech)
+            }
+        
+            h3.innerText = data[0].word
+            audio.src = data[0].phonetics[0].audio
+            }
+            catch{
+                h3.innerText = "Word can not be found"
+            }
+            
+        }
+        function p(){
+            audio.play()
+        }
+        function clean_up(){
+            audio.src = ""
+            h3.innerText = "Searching...."
+         
+            //e.firstElementChild can be used. 
+            let child = lists.lastElementChild;
+            while (child.nodeName == "LI") {
+                lists.removeChild(child)
+                child = lists.lastElementChild
+        
+            }
+            
+        }
+        function create_list(arr,part_of_speach){
+            const list = document.createElement("li")
+            list.innerText = part_of_speach + ":"
+            lists.append(list)
+            for (item of arr){
+                const l = document.createElement("ul")
+                l.innerText = item.definition
+                list.append(l)
+            }
+        }
+        input.addEventListener("keyup", function (event) { if (event.keyCode == 13) { button.click(); }})</script>
+</body>
+</html>
